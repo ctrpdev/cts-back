@@ -1,6 +1,7 @@
 from django.urls import re_path
 from . import apis
 
+
 urlpatterns = [
     re_path('register/', apis.register, name='register'),
     re_path('verify_email/', apis.verify_email, name='verify_email'),

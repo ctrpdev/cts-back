@@ -3,8 +3,10 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 
+
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
+
 
 class EmailVerificationToken(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import CustomUser
 
+
 class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=30)
     last_name = serializers.CharField(max_length=30)

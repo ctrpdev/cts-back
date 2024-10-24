@@ -12,6 +12,7 @@ def send_verification_email(verification_link, email):
         fail_silently=False,
     )
 
+
 @shared_task()
 def send_winner_notification(first_name, last_name, email):
     try:
@@ -23,4 +24,4 @@ def send_winner_notification(first_name, last_name, email):
             fail_silently=False,
         )
     except Exception as e:
-        print(f'Error al enviar correo: {str(e)}')  # O usa un logger para registrar el error
+        print(f'Error al enviar correo: {str(e)}')

@@ -52,7 +52,7 @@ docker run --name redis-container -p 6379:6379 -d redis
 Ejecuta celery:
 
 ```bash
-# ejecuta flower para visualizar las tareas
+# ejecuta flower para visualizar las tareas en http://localhost:5555/
 celery -A main.celery_app flower
 
 # ejecuta celery

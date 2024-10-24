@@ -13,15 +13,17 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from .models import EmailVerificationToken
 from .serializers import UserSerializer
 from .tasks import send_verification_email, send_winner_notification
-from django.core.mail import send_mail
+
 
 User = get_user_model()
+
 
 @api_view(['POST'])
 def check_email(request):
     email = request.data.get('email')
     exists = User.objects.filter(email=email).exists()
     return Response({'exists': exists}, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def register(request):
@@ -43,6 +45,7 @@ def register(request):
             return Response({'message': f'Fallo al enviar correo de verificación: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def verify_email(request):
@@ -69,6 +72,7 @@ def verify_email(request):
     except EmailVerificationToken.DoesNotExist:
         return Response({'error': 'Invalid token or email.'}, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def login(request):
     try:
@@ -88,16 +92,19 @@ def login(request):
         'is_staff': user.is_staff
     }, status=status.HTTP_200_OK)
 
+
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def profile(request):
     return Response(f'Hello {request.user.first_name}', status=status.HTTP_200_OK)
 
+
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def admin_view(request):
     return Response({'message': 'Esta es la vista de administración.'}, status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -111,7 +118,7 @@ def generate_winner(request):
     winner = random.choice(active_users)
 
     if winner:
-        send_winner_notification.delay(winner.first_name, winner.last_name, winner.email)  # Usar Celery para enviar el correo
+        send_winner_notification.delay(winner.first_name, winner.last_name, winner.email)
 
     serializer = UserSerializer(winner)
 
