@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 ## Ejecuta el proyecto
 
-Copia las variables de entorno a un .env como el .env.example. A continuación:
+### Copia las variables de entorno a un .env como el .env.example. A continuación:
 
 ```bash
 # crea las migraciones
